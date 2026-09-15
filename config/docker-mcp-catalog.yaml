@@ -1,0 +1,53 @@
+version: 2
+name: custom
+displayName: Custom MCP Servers
+registry:
+  netwitness:
+    description: "Queries metadata and alerts from NetWitness."
+    title: "NetWitness"
+    type: server
+    dateAdded: "2025-09-20T00:00:00Z"
+    image: netwitness-mcp-server:latest
+    ref: ""
+    readme: ""
+    toolsUrl: ""
+    source: ""
+    upstream: ""
+    icon: ""
+    tools:
+      - name: query_sessions
+      - name: query_metakey_values
+      - name: query_alerts
+      - name: get_netwitness_meta_keys
+      - name: get_netwitness_query_syntax
+      - name: query_incidents
+      - name: query_incident_alerts
+      - name: update_incident_status
+      - name: add_incident_journal_entry 
+    secrets:
+      - name: NETWITNESS_API_URL
+        env: NETWITNESS_API_URL
+        example: "https://192.168.1.200:50105"
+      - name: NETWITNESS_USERNAME
+        env: NETWITNESS_USERNAME
+        example: "admin"
+      - name: NETWITNESS_PASSWORD
+        env: NETWITNESS_PASSWORD
+        example: "netwitness"
+      - name: NW_ADMIN_URL
+        env: NW_ADMIN_URL
+        example: "https://192.168.1.100"
+      - name: NW_ADMIN_USERNAME
+        env: NW_ADMIN_USERNAME
+        example: "admin"
+      - name: NW_ADMIN_PASSWORD
+        env: NW_ADMIN_PASSWORD
+        example: "netwitness"
+    metadata:
+      category: security
+      tags:
+        - network-forensics
+        - netwitness
+        - security-analytics
+      license: MIT
+      owner: local
