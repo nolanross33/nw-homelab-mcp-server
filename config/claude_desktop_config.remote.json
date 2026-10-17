@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "netwitness": {
+      "command": "npx",
+      "args": [
+        "mcp-remote",
+        "http://192.168.1.123:8811/mcp",
+        "--allow-http"
+      ]
+    }
+  }
+}

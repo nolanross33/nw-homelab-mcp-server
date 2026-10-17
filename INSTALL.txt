@@ -1,0 +1,49 @@
+netwitness-mcp-server - setup
+==============================
+
+Requirements
+------------
+- A NetWitness environment: Concentrator/Broker + Admin Server
+- Docker Desktop with the MCP Toolkit
+
+Files
+-----
+netwitness_mcp_server.py   the server (FastMCP). All credentials and
+                            endpoints come from environment variables -
+                            nothing is hardcoded.
+Dockerfile                  packages the server as a container image,
+                            run as a non-root user.
+config/                     reference configs for Docker's MCP
+                            Gateway/Toolkit and Claude Desktop - local
+                            (same host) and remote (server on a
+                            different host than the MCP client).
+tests/                       pytest suite for lookup_indicator.
+
+Build and configure secrets
+----------------------------
+  docker build -t netwitness-mcp-server .
+
+  docker mcp secret set NETWITNESS_API_URL="https://<concentrator-or-broker-ip>:50105"
+  docker mcp secret set NETWITNESS_USERNAME="<username>"
+  docker mcp secret set NETWITNESS_PASSWORD="<password>"
+  docker mcp secret set NW_ADMIN_URL="https://<admin-server-ip>"
+  docker mcp secret set NW_ADMIN_USERNAME="<username>"
+  docker mcp secret set NW_ADMIN_PASSWORD="<password>"
+
+Register with Docker's MCP catalog
+-----------------------------------
+Copy or merge config/docker-mcp-catalog.yaml and
+config/docker-mcp-registry.yaml into ~/.docker/mcp/catalogs/custom.yaml
+and ~/.docker/mcp/registry.yaml.
+
+Point your MCP client at it
+-----------------------------
+config/claude_desktop_config.local.json   same-host setup
+config/claude_desktop_config.remote.json  cross-host setup, via an MCP
+                                           Gateway container
+  https://docs.docker.com/ai/mcp-catalog-and-toolkit/
+
+Running tests
+--------------
+  pip install httpx pytest pytest-asyncio   # one-time
+  python -m pytest tests/test_lookup_indicator.py -v
